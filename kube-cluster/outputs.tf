@@ -2,12 +2,12 @@ output "masters_names" {
   value = vsphere_virtual_machine.k8s_masters[*].name
 }
 
-output "masters_ip" {
-  value = vsphere_virtual_machine.k8s_masters[*].default_ip_address
+output "workers_names" {
+  value = vsphere_virtual_machine.k8s_workers[*].name
 }
 
-output "workers_name" {
-  value = vsphere_virtual_machine.k8s_workers[*].name
+output "masters_ip" {
+  value = vsphere_virtual_machine.k8s_masters[*].default_ip_address
 }
 
 output "workers_ip" {
