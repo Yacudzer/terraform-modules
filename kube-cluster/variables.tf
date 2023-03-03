@@ -5,7 +5,7 @@ variable "masters_number" {
 
 variable "workers_number" {
   description = "Number of workers"
-  default = 1
+  default = 2
 }
 
 variable "enveirment" {
@@ -27,7 +27,7 @@ variable "resource_pool_id" {
   description = "Resource pool id where servers will be placed"
 }
 
-variable "folder_id" {
+variable "folder_name" {
   description = "Folder where servers will be placed"
 }
 

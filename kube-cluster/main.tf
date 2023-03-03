@@ -9,7 +9,7 @@ resource "vsphere_virtual_machine" "k8s_masters" {
   count                  = var.masters_number
   name                   = "${local.master_name_prefix}${format("%02d", count.index + 1)}"
   resource_pool_id       = var.resource_pool_id
-  folder                 = var.folder_id
+  folder                 = var.folder_name
   datastore_id           = var.datastore_id
   num_cpus               = var.master_num_cpu
   num_cores_per_socket   = local.worker_cpu_per_socket
@@ -55,7 +55,7 @@ resource "vsphere_virtual_machine" "k8s_workers" {
   count                  = var.workers_number
   name                   = "${local.worker_name_prefix}${format("%02d", count.index + 1)}"
   resource_pool_id       = var.resource_pool_id
-  folder                 = var.folder_id
+  folder                 = var.folder_name
   datastore_id           = var.datastore_id
   num_cpus               = var.worker_num_cpu
   num_cores_per_socket   = local.worker_cpu_per_socket
