@@ -44,7 +44,7 @@ resource "vsphere_virtual_machine" "k8s_masters" {
     customize {
       linux_options {
         domain    = var.domain_name
-        host_name = lower("${local.master_name_prefix}${format("%02d", count.index + 1)}")
+        host_name = lower("${local.worker_name_prefix}${format("%02d", count.index + 1)}")
       }
       network_interface {}
     }
