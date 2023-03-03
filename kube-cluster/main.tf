@@ -12,7 +12,7 @@ resource "vsphere_virtual_machine" "k8s_masters" {
   folder                 = var.folder_name
   datastore_id           = var.datastore_id
   num_cpus               = var.master_num_cpu
-  num_cores_per_socket   = local.worker_cpu_per_socket
+  num_cores_per_socket   = local.master_cpu_per_socket
   cpu_hot_add_enabled    = false
   memory                 = var.master_memory
   memory_hot_add_enabled = false
