@@ -1,6 +1,6 @@
 locals {
   master_name_prefix    = "${var.enveirment}-${var.name_masters}-"
-  worker_name_prefix    = "${var.enveirment}-${var.name_masters}-"
+  worker_name_prefix    = "${var.enveirment}-${var.name_workers}-"
   master_cpu_per_socket = var.master_num_cpu < 8 ? var.master_num_cpu : (var.master_num_cpu / 2 == round(var.master_num_cpu / 2) ? var.master_num_cpu / 2 : var.master_num_cpu)
   worker_cpu_per_socket = var.worker_num_cpu < 8 ? var.worker_num_cpu : (var.worker_num_cpu / 2 == round(var.worker_num_cpu / 2) ? var.worker_num_cpu / 2 : var.worker_num_cpu)
 }
