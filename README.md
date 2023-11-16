@@ -1,4 +1,7 @@
 # Repository for common-used terraform modules
+## gcp_network
+Simple module for gcp networks with router and NAT
+
 ## kube-cluster
 Module for deploy kubernetes-cluster (just infrastructure).
 Best practice for usage: template for VMs should contain at least one disk with 20Gb disk space.
