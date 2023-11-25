@@ -50,7 +50,7 @@ variable "chart_version" {
   description = "Version of chart for using. Change it if you know what are you doing."
 }
 
-variable "tags" {
+variable "labels" {
   description = "Google labels for this resources"
   type        = map(string)
   default     = {}
@@ -62,9 +62,14 @@ variable "rotation" {
     {
       rotation_minutes = number
       keep_minutes     = number
-      state_bucket     = string
     }
   )
   nullable = true
   default  = null
+}
+
+variable "previous_state" {
+  description = "Previous state"
+  type = map(map(string))
+  default = {}
 }

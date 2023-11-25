@@ -1,17 +1,8 @@
 locals {
-  object_name = "${var.name}_${random_pet.object_name.id}.json"
-
   start_of_times = "0000-01-01T00:00:00Z"
   current_date   = plantimestamp()
 
-  previous_state = (
-    data.http.request_state.status_code == 200
-    ? jsondecode(data.http.request_state.response_body) : (
-      data.http.request_state.status_code == 404
-      ? {}
-      : raise("Something wrong with http ansewer (code is ${data.http.request_state.status_code})")
-    )
-  )
+  previous_state = var.previous_state
 
   previous_state_pure  = [for key, value in local.previous_state : key]
   last_state_timestamp = try(element(local.previous_state_pure, length(local.previous_state_pure) - 1), local.start_of_times)
@@ -20,20 +11,15 @@ locals {
     local.last_state_timestamp
   ) == 1
 
-
   state_without_old = [for ts in local.previous_state_pure : ts
     if timecmp(ts, timeadd(local.current_date, "${var.rotation.keep_minutes * -1}m")) == 1
   ]
 
   current_state = (
-    data.http.request_state.status_code == 404
-    ? [local.current_date]
-    : (
       local.need_to_rotate
       ? concat(local.state_without_old, [local.current_date])
       : local.state_without_old
     )
-  )
   #  current_state = [local.current_date]
   current_state_full = {
     for ts in local.current_state : ts =>
@@ -44,14 +30,4 @@ locals {
   }
 
   last_element_from_current_state = element(local.current_state, length(local.current_state) - 1)
-}
-
-data "google_storage_object_signed_url" "url_to_object" {
-  bucket   = var.rotation.state_bucket
-  path     = local.object_name
-  duration = "30s"
-}
-
-data "http" "request_state" {
-  url = data.google_storage_object_signed_url.url_to_object.signed_url
 }
