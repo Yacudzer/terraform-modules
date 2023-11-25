@@ -30,3 +30,31 @@ variable "parent_zone_name" {
   type        = string
   default     = null
 }
+
+variable "A_records" {
+  description = "List of A records"
+  type = map(
+    object(
+      {
+        values = list(string)
+        ttl    = optional(number, 3600)
+      }
+    )
+  )
+  default  = {}
+  nullable = false
+}
+
+variable "AAAA_records" {
+  description = "List of AAAA records"
+  type = map(
+    object(
+      {
+        values = list(string)
+        ttl    = optional(number, 3600)
+      }
+    )
+  )
+  default  = {}
+  nullable = false
+}

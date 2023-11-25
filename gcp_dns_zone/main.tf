@@ -23,3 +23,21 @@ resource "google_dns_managed_zone" "this" {
     data.google_dns_managed_zone.parent
   ]
 }
+
+resource "google_dns_record_set" "A" {
+  for_each     = var.A_records
+  managed_zone = google_dns_managed_zone.this.name
+  name         = "${google_dns_managed_zone.this.name}.${each.key}"
+  type         = "A"
+  ttl          = each.value.ttl
+  rrdatas      = each.value.values
+}
+
+resource "google_dns_record_set" "AAAA" {
+  for_each     = var.AAAA_records
+  managed_zone = google_dns_managed_zone.this.name
+  name         = "${google_dns_managed_zone.this.name}.${each.key}"
+  type         = "A"
+  ttl          = each.value.ttl
+  rrdatas      = each.value.values
+}
