@@ -27,7 +27,7 @@ resource "google_dns_managed_zone" "this" {
 resource "google_dns_record_set" "A" {
   for_each     = var.A_records
   managed_zone = google_dns_managed_zone.this.name
-  name         = "${google_dns_managed_zone.this.name}.${each.key}"
+  name         = "${each.key}.${google_dns_managed_zone.this.dns_name}"
   type         = "A"
   ttl          = each.value.ttl
   rrdatas      = each.value.values
@@ -36,7 +36,7 @@ resource "google_dns_record_set" "A" {
 resource "google_dns_record_set" "AAAA" {
   for_each     = var.AAAA_records
   managed_zone = google_dns_managed_zone.this.name
-  name         = "${google_dns_managed_zone.this.name}.${each.key}"
+  name         = "${each.key}.${google_dns_managed_zone.this.dns_name}"
   type         = "A"
   ttl          = each.value.ttl
   rrdatas      = each.value.values
