@@ -50,7 +50,7 @@ variable "chart_version" {
   description = "Version of chart for using. Change it if you know what are you doing."
 }
 
-variable "labels" {
+variable "tags" {
   description = "Google labels for this resources"
   type        = map(string)
   default     = {}
@@ -60,16 +60,12 @@ variable "rotation" {
   description = "Configuration for rotaion. rotation_minutes: how often need to change new ip; keep_minutes: how long need to store old ip;"
   type = object(
     {
-      rotation_minutes = number
-      keep_minutes     = number
+      rotation_minutes                  = number
+      keep_minutes                      = number
+      state_bucket_name                 = string
+      previous_state_http_response_code = number
+      previous_state_http_response_body = string
     }
   )
-  nullable = true
-  default  = null
-}
-
-variable "previous_state" {
-  description = "Previous state"
-  type = map(map(string))
-  default = {}
+  nullable = false
 }
