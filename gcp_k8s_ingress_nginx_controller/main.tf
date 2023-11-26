@@ -21,6 +21,21 @@ resource "helm_release" "this" {
   ]
 }
 
+data "google_dns_managed_zone" "dns_zone" {
+  count = var.dns != null ? 1 : 0
+  name  = var.dns.zone_name
+}
+
+resource "google_dns_record_set" "dns_record" {
+  count        = var.dns != null ? 1 : 0
+  managed_zone = data.google_dns_managed_zone.dns_zone.0.name
+  name         = "${var.dns.hostname}.${data.google_dns_managed_zone.dns_zone.0.dns_name}"
+  type         = "A"
+  ttl          = var.dns.ttl
+  rrdatas = [
+    google_compute_address.static_ip[local.last_element_from_current_state].address
+  ]
+}
 #resource "kubernetes_service" "ingress_lb" {
 #  for_each  = local.rotation_enabled ? toset(local.current_state) : []
 #  wait_for_load_balancer = true

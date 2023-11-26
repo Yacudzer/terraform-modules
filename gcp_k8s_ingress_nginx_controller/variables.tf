@@ -69,3 +69,15 @@ variable "rotation" {
   )
   nullable = false
 }
+
+variable "dns" {
+  type = object(
+    {
+      hostname = string
+      zone_name = string
+      ttl      = optional(number, 300)
+    }
+  )
+  nullable = true
+  default  = null
+}
