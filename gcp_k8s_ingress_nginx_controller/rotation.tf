@@ -9,3 +9,11 @@ resource "random_pet" "rotated_resources" {
   length    = 2
   separator = "-"
 }
+
+resource "google_compute_address" "static_ip" {
+  for_each = toset(local.current_state)
+  region   = var.google_region
+  name = "lb-${var.name}-${random_pet.rotated_resources[each.key].id}"
+  address_type = upper(var.address_type)
+  subnetwork   = upper(var.address_type) == "INTERNAL" ? var.subnetwork_id : null
+}

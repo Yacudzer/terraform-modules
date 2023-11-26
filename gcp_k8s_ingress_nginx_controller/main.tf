@@ -21,14 +21,6 @@ resource "helm_release" "this" {
   ]
 }
 
-resource "google_compute_address" "static_ip" {
-  for_each = toset(local.current_state)
-  region   = var.google_region
-  name = "lb-${var.name}-${random_pet.rotated_resources[each.key].id}"
-  address_type = var.address_type
-  subnetwork   = var.address_type == "INTERNAL" ? var.subnetwork_id : null
-}
-
 #resource "kubernetes_service" "ingress_lb" {
 #  for_each  = local.rotation_enabled ? toset(local.current_state) : []
 #  wait_for_load_balancer = true

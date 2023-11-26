@@ -27,7 +27,7 @@ variable "address_type" {
   description = "EXTERNAL or INTERNAL address"
   type        = string
   validation {
-    condition     = var.address_type == "EXTERNAL" || var.address_type == "INTERNAL"
+    condition     = upper(var.address_type) == "EXTERNAL" || upper(var.address_type) == "INTERNAL"
     error_message = "'address_type' must be EXTERNAL or INTERNAL"
   }
   default = "EXTERNAL"
