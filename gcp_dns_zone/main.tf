@@ -25,7 +25,7 @@ resource "google_dns_managed_zone" "this" {
 }
 
 resource "google_dns_record_set" "NS_to_parent" {
-  count        = var.parent_zone_name != null ? 1 : 0
+  count        = var.parent_zone_name != null && local.visibility != "private" ? 1 : 0
   managed_zone = data.google_dns_managed_zone.parent.0.name
   name         = "${var.zone_name}.${data.google_dns_managed_zone.parent.0.dns_name}"
   type         = "NS"
